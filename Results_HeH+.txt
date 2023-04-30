@@ -1,0 +1,36 @@
+Results HeH+
+
+Converged electronic energy: -4.227529304208294
+Converged total energy: -2.860662163694352
+
+Energy eigenvalues [-1.59745232 -0.0616686 ]
+
+Matrix coefficients [[-0.80191698 -0.78226577]
+ [-0.33680121  1.06844537]]
+
+COMPARATION
+
+Equilibrium distance from input =  1.4632
+Total Energy =  -2.860662163694352
+Equilibrium distance calculated from the graphic = 1.3782500000000018
+Energy calculated from the graphic = -2.862847278173723
+
+Iterations
+1
+Electronic energy =  0.0
+Delta 0.8828668530136916
+2
+Electronic energy =  -4.141862876133925
+Delta 0.27917630406864197
+3
+Electronic energy =  -4.22649189912899
+Delta 0.02966178007722938
+4
+Electronic energy =  -4.227522925343758
+Delta 0.0023182848695552983
+5
+Electronic energy =  -4.2275292681003185
+Delta 0.000174397696861733
+6
+Electronic energy =  -4.227529304014094
+Delta 1.3079512369373298e-05

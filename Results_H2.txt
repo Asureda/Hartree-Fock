@@ -1,0 +1,24 @@
+Results H2
+
+Converged electronic energy: -1.831000982923308
+Converged total energy: -1.1167152686375936
+
+Energy eigenvalues [-0.57820272  0.67027103]
+
+Matrix coefficients [[-0.54893391  1.2114655 ]
+ [-0.54893391 -1.2114655 ]]
+
+COMPARATION
+Equilibrium distance from input =  1.4
+Total Energy =  -1.1167152686375936
+Equilibrium distance calculated from the graphic = 1.3459375000000016
+Energy calculated from the graphic = -1.117506839159518
+
+Iterations (Direct solution)
+
+1
+Electronic energy =  0.0
+Delta 0.6026568697043997
+2
+Electronic energy =  -1.831000982923308
+Delta 2.0014830212433605e-16
