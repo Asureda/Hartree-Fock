@@ -1,0 +1,54 @@
+[build-system]
+requires = [
+    "setuptools>=65.5.0",
+    "setuptools_scm[toml]>=7.0.5"
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hartree_fock"
+version = "0.1.1-dev"
+description = "Hartree Fock project of the Msc in Atomistic and Multiscale Computational Modelling in Physics, Chemistry and Biochemistry."
+readme = "README.md"
+classifiers = [
+    "Programming Language :: Python :: 3.10",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+authors = [
+  { name="Alexandre Sureda Croguennoc",email="alexandre.sureda@co.idom.com" },
+]
+
+requires-python = ">=3.10"
+keywords = ["python", "quantum", "hartree-fock",  "SCF"]
+dependencies = [
+    "scipy>=1.7.0",
+    "sympy>=1.8",
+    "numpy>=1.21.1",
+    "matplotlib>=3.4.2",
+    "setuptools_scm[toml]>=7.0.5",
+
+]
+
+[project.urls]
+"Homepage" = "https://github.com/Asureda/hartree_fock"
+"Bug Tracker" = "https://github.com/Asureda/hartree_fock/issues"
+
+[project.optional-dependencies]
+tests = [
+    "pytest>=5.4.3",
+    "pytest-cov>=2.12.1",
+    "pytest-runner>=5.3.1",
+]
+docs = [
+    "sphinx>=4.1.2",
+    "sphinx_rtd_theme",
+    "sphinx_autodoc_typehints",
+    "sphinxcadquery"
+]
+
+[tool.black]
+line-length = 120
+
+[tool.setuptools]
+package-dir = {"" = "src"}
