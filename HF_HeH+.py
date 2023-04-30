@@ -1,37 +1,47 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon Jan 22 13:12:55 2020
-
-@author: B568302
+@author: Alexandre Sureda Croguennoc
+Electronic Structure - Quantum mechanics homework
 """
 
 import numpy as np
-import scipy.special as sp
+from scipy.special import erf
 from scipy.optimize import fmin
 import matplotlib.pyplot as plt
 
-def overlap(A,B,Ra): 
-    "Returns the overlap integral Sij = <Xi/Xj>"
-    return (np.pi/(A+B))**(3/2)*np.exp(-A*B*Ra**2/(A+B))
+def overlap(A, B, Ra):
+    """
+    Returns the overlap integral Sij = <Xi/Xj>
+    """
+    return (np.pi / (A + B)) ** (3/2) * np.exp(-A * B * Ra ** 2 / (A + B))
 
-def kin(A,B,R_AB): 
-    "Returns the kinetic integral Kij = <Xi/K/Xj>"
-    return (A*B/(A+B))*(3-2*A*B*R_AB**2/(A+B))*(np.pi/(A+B))**(3/2)*\
-    np.exp(-A*B*R_AB**2/(A+B))
-    
+def kin(A, B, R_AB):
+    """
+    Returns the kinetic integral Kij = <Xi/K/Xj>
+    """
+    alpha = A * B / (A + B)
+    t1 = 1 - 2 * alpha * R_AB ** 2 / (A + B)
+    t2 = np.pi / (A + B) ** (3/2)
+    return alpha * t1 * t2 * np.exp(-A * B * R_AB ** 2 / (A + B))
+
 def Fo(t):
-        "Error function"
-        if t < 1.e-6:
-            return 1-t/3
-        return 0.5*(np.pi/t)**0.5*sp.erf(t**0.5)        
+    """
+    Error function
+    """
+    return erf(np.sqrt(t)) if t >= 1e-6 else 1 - t / 3
 
-def pot(A,B, Ra, Rb, Rc, Z):
-        "Returns the potential integral Vij= <Xi/V/Xj>"
-        Rp=(A*Ra+B*Rb)/(A+B)
-        Rab=(Ra-Rb)
-        return -2*np.pi*Z*np.exp(-A*B*Rab**2/(A+B))*Fo((A+B)*(Rp-Rc)**2)/(A+B)
-    
-def bielectron(A,B,C,D,Rab,Rcd,Rpq):
+def pot(A, B, Ra, Rb, Rc, Z):
+    """
+    Returns the potential integral Vij= <Xi/V/Xj>
+    """
+    Rp = (A * Ra + B * Rb) / (A + B)
+    Rab = Ra - Rb
+    t1 = (A + B) * (Rp - Rc) ** 2
+    t2 = 2 * np.exp(-A * B * Rab ** 2 / (A + B))
+    t3 = Fo(t1) / (A + B)
+    return -2 * np.pi * Z * t2 * t3
+
+def bielectron(A, B, C, D, Rab, Rcd, Rpq):
     """
     Returns the bielectronic integral, the colulumbic term <ab/ab> and the
     exchange term <ab/ba>
@@ -39,8 +49,14 @@ def bielectron(A,B,C,D,Rab,Rcd,Rpq):
     Rcd equals distance between centre C and centre D
     Rpq equals distance between centre p and q
     """
-    return 2.0*(np.pi**2.5)/((A+B)*(C+D)*np.sqrt(A+B+C+D))*Fo((A+B)*(C+D)*Rpq**2/(A+B+C+D))\
-    *np.exp(-A*B*Rab**2/(A+B)-C*D*Rcd**2/(C+D))
+    t1 = A * B / (A + B)
+    t2 = C * D / (C + D)
+    t3 = (A + B) * (C + D) * Rpq ** 2 / (A + B + C + D)
+    t4 = np.exp(-A * B * Rab ** 2 / (A + B) - C * D * Rcd ** 2 / (C + D))
+    t5 = Fo(t3) / ((A + B) * (C + D))
+    t6 = 2 * np.pi ** 2.5 / np.sqrt(A + B + C + D)
+    return t6 * t4 * t5 * t1 * t2
+
 def integral(N,R,Zeta1,Zeta2,Za,Zb):
     """
     Returns all the values of the integrals in each component of the matrix
