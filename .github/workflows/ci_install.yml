@@ -26,5 +26,6 @@ jobs:
     - name: Run notebook
       run: |
         cd examples
-        jupyter nbconvert --execute hartree.ipynb
+        ipynb-py-convert hartree.ipynb hartree.py
+        python hartree.py
 
