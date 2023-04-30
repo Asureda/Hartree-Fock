@@ -3,7 +3,7 @@ Hartree Fock project of the Msc in Atomistic and Multiscale Computational Modell
 
 [![CI with install](https://github.com/Asureda/hartree_fock/actions/workflows/ci_install.yml/badge.svg)](https://github.com/Asureda/hartree_fock/actions/workflows/ci_install.yml)
 
-[Ver Informe de Alexandre_Sureda](report/Alexandre_Sureda_Informe_EE.pdf)
+[Results summary](report/Alexandre_Sureda_Informe_EE.pdf)
 
 
 
