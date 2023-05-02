@@ -1,9 +1,0 @@
-README.md
-pyproject.toml
-src/hartree_fock/__init__.py
-src/hartree_fock/hartree_fock.py
-src/hartree_fock.egg-info/PKG-INFO
-src/hartree_fock.egg-info/SOURCES.txt
-src/hartree_fock.egg-info/dependency_links.txt
-src/hartree_fock.egg-info/requires.txt
-src/hartree_fock.egg-info/top_level.txt
