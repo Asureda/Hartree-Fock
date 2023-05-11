@@ -120,7 +120,6 @@ class HartreeFock:
         """
         SCF iteration
         """
-        
         #1. Initial density matrix 
         #The null matrix is used to give the initial guess of the density matrix
         P = np.zeros([2,2])
@@ -134,44 +133,21 @@ class HartreeFock:
         while (Iter<self.Maxit):
             Iter += 1
         
-            #2. Calculate the Fock matrix by calculatin the G matrix (coulumb and exchange terms)
-            G = np.zeros([2,2]) # This is the two electron contribution in the equations above
-            for i in range(2):
-                for j in range(2):
-                    for k in range(2):
-                        for l in range(2):
-                            G[i,j]+=P[k,l]*(TT[i,j,k,l]-0.5*TT[i,l,k,j])
-
+            #2. Calculate the G matrix using numpy broadcasting
+            G = np.einsum('kl,ijkl->ij', P, TT - 0.5*np.swapaxes(TT, 2, 3))
+            
             # Calculate the Fock matrix with the core Hamiltonain and the G matrix
             F = H+G
             
-            #3. Transform the Fcok matrix with the X matrix 
-            ewa = np.matmul(F,X)
-            Fprime = np.matmul(X.T,ewa)
+            #3-5. Diagonalize the Fock matrix and get the molecular orbitals coefficients
+            epsilon, C = np.linalg.eigh(np.dot(X.T, np.dot(F, X)))
+            C = np.dot(X, C)
             
-            #4. Obtain the eigenvalues and the coefficients 
-            epsilon,Cprime=np.linalg.eigh(Fprime)
-                                        
-            #5. Molecular orbitals coefficients
-            # Transform Cprime to get the coefficients C
-            C = np.matmul(X,Cprime)
-            
-            #6. Calculate the new density matrix from the old P 
-            P_0 = np.array(P)
-            P= np.zeros([2,2])
-            
-            # Form new density matrix
-            for i in range(2):
-                for j in range(2):
-                    #New density matrix
-                    for k in range(1):
-                        P[i,j] += 2.0*C[i,k]*C[j,k]
+            #6. Calculate the new density matrix with numpy einsum
+            P = 2*np.einsum('ik,jk->ij', C[:,:1], C[:,:1])
             
             #7. Check the convergence 
-            Delta = 0.0
-        
-            Delta = (P-P_0)
-            Delta = np.sqrt(np.sum(Delta**2)/4.0)
+            Delta = np.sqrt(np.sum((P - np.array(P))**2)/4.0)
             
             if (Delta<self.Crit):
                 # Electronic energy
@@ -182,6 +158,8 @@ class HartreeFock:
                 # Add nuclear repulsion to get the total energy
                 self.Energytot = self.Energy+self.Za*self.Zb/self.R
                 return self.Energy,self.Energytot,self.P,self.epsilon,self.C 
+            
+
 
 
 
